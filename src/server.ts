@@ -19,7 +19,7 @@ config()
 const app = express()
 const PORT = 5050
 
-app.use(myLogger)
+// app.use(myLogger)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
