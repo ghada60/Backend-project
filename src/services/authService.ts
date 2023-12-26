@@ -11,7 +11,7 @@ export const checkIfUserExistsByEmail = async (email: string) => {
 export const activate = async (activationToken: string) => {
   const user = await User.findOneAndUpdate(
     { activationToken },
-    { isAccountVerified: true, token: undefined },
+    { isAccountVerified: true, activationToken: undefined },
     { new: true }
   )
   return user

@@ -17,6 +17,9 @@ export const sendEmail = async (email: string, subject: string, htmlTemplate: st
         user: emailConfig.emailAddress,
         pass: emailConfig.emailPassword,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     })
 
     const mailOptions = {

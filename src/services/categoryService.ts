@@ -58,6 +58,6 @@ export const createNewCategory = async (newCategory: CategoryDocument) => {
   if (categoryExist) {
     throw ApiError.alreadyExist(`Category already exists with this ${categoryName}`)
   }
-  const category = await Category.create({ newCategory })
-  return category
+  const category = new Category( newCategory )
+  return category.save()
 }

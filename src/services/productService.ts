@@ -92,9 +92,9 @@ export const updateProduct = async (
 
 //** Service:- Create a Product */
 export const createNewProduct = async (newProduct: ProductDocument) => {
-  const product = await Product.create(newProduct)
+  const product = new Product (newProduct)
 
-  return product
+  return product.save()
 }
 
 //** Service:- Check Stcok */

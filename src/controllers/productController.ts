@@ -91,9 +91,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
       productPrice,
       quantityInStock,
       category,
-      discount,
-      sizes,
-      variants,
+      productImage,
     } = req.body
     const parsedQuantityInStock = parseInt(quantityInStock)
     const parsedProductPrice = parseFloat(productPrice)
@@ -101,13 +99,11 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
       productName,
       productDescription,
       productPrice: parsedProductPrice,
-      productImage: req.file?.path,
+      productImage,
       quantityInStock: parsedQuantityInStock,
       category,
-      discount,
-      sizes,
-      variants,
     })
+    console.log(product)
 
     const newProduct = await createNewProduct(product)
     res.status(201).json({ message: 'Product has been created successfully', payload: newProduct })
@@ -137,7 +133,15 @@ export const updateProductById = async (req: Request, res: Response, next: NextF
   } catch (error) {
     next(error)
   }
+
+  const productId = req.params.productId
+  const updatedProduct = req.body.product
+  const product = await Product.findByIdAndUpdate(productId, updatedProduct,{new: true})
+  res.json({product})
 }
+// catch (error) {
+//     next(error)
+//   }}
 
 /**-----------------------------------------------
  * @desc Get HighestSold Product

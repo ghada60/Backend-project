@@ -3,7 +3,7 @@ import { config } from 'dotenv'
 import { databaseConnection } from './database/db'
 import apiErrorHandler from './middlewares/errorHandler'
 import myLogger from './middlewares/logger'
-
+import cors, { CorsOptions } from 'cors'
 import usersRouter from './routers/usersRoute'
 import authRouter from './routers/authRoute'
 import categoryRouter from './routers/categoriesRoute'
@@ -14,11 +14,26 @@ import discountCodeRouter from './routers/discountCodeRoute'
 import passwordRouter from './routers/passwordRoute'
 import reviewRouter from './routers/reviewRoute'
 import ordersRouter from './routers/ordersRoute'
-
-config()
+import dotenv from 'dotenv'
+dotenv.config()
 const app = express()
-const PORT = 5050
-
+const PORT = process.env.Port || 5050
+const environment = process.env.ENVNODE_ENV || 'development'
+const whitelist = ['myownfrontenddomin.com']
+if (environment === 'development') {
+  whitelist.push('http://localhost:3000')
+}
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    const isOriginAllowed = origin && whitelist.indexOf(origin) !== -1
+    if (isOriginAllowed) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+}
+app.use(cors())
 // app.use(myLogger)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())

@@ -1,3 +1,7 @@
-import app from '../src/server'
+import axios from 'axios'
+const baseURL = process.env.BACKEND_ORIGIN
+const api = axios.create({
+    baseURL
+})
 
-export default app
+export default api

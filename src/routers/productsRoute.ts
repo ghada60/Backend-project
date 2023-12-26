@@ -23,14 +23,7 @@ router.get('/:productId', validateObjectId('productId'), getProductById)
 router.get('/highest-sold', getHighestSoldProducts)
 
 // Add new product route
-router.post(
-  '/',
-  checkAuth,
-  checkRole('ADMIN'),
-  uploadImage.single('productImage'),
-  createProduct,
-  validateProduct
-)
+router.post('/', checkAuth, checkRole('ADMIN'), validateProduct, createProduct)
 
 // Delete product bu id route
 router.delete(

@@ -6,10 +6,16 @@ import ApiError from '../errors/ApiError'
 export function validateUser(req: Request, res: Response, next: NextFunction) {
   const isUpdated = req.method === 'PUT'
   const schema = zod.object({
-    firstName: isUpdated ? z.string().min(3).max(30).optional() : z.string().min(3).max(30),
-    lastName: isUpdated ? z.string().min(3).max(30).optional() : z.string().min(3).max(30),
+    firstName: isUpdated
+      ? z.string().min(3).max(30).optional()
+      : z.string().min(3, { message: 'FirstName is required' }).max(30),
+    lastName: isUpdated
+      ? z.string().min(3).max(30).optional()
+      : z.string().min(3, { message: 'LastName is required' }).max(30),
     password: isUpdated ? z.string().min(8).max(100).optional() : z.string().min(8).max(100),
-    email: isUpdated ? z.string().email().optional() : z.string().email(),
+    email: isUpdated
+      ? z.string().email().optional()
+      : z.string().email({ message: 'Email is required' }),
   })
 
   try {

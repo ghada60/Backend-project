@@ -18,19 +18,19 @@ export function validateProduct(req: Request, res: Response, next: NextFunction)
           .min(10, { message: 'Product description must at least 3 characters' })
           .max(100, { message: 'Product description must be 100 characters or less' }),
     productImage: zod.string().min(1, { message: 'Product image is required' }).optional(),
-    quantityInStock: isUpdated
-      ? zod
+    quantityInStock: zod
           .number()
           .nonnegative({ message: 'Quantity in stock must be nonnegative number' })
           .optional()
-      : zod.number().nonnegative({ message: 'Quantity in stock must be nonnegative number' }),
-    productPrice: isUpdated
+      
       ? zod.number().nonnegative({ message: 'Product price must be nonnegative number' }).optional()
       : zod.number().nonnegative({ message: 'Product price must be nonnegative number' }),
-    category: isUpdated
-      ? zod.array(zod.string()).min(1, { message: 'Please enter at least one category' }).optional()
-      : zod.array(zod.string()).min(1, { message: 'Please enter at least one category' }),
-  })
+    // category: 
+    // isUpdated? 
+    //zod.array(zod.string()).min(1, { message: 'Please enter at least one category' }).optional()
+      // : zod.array(zod.string()).min(1, { message: 'Please enter at least one category' }),
+ }
+  )
 
   try {
     schema.parse(req.body)

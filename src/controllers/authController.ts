@@ -101,7 +101,8 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         expiresIn: '24h',
       }
     )
-    res.status(200).json({ message: 'Login successful', token })
+    const userWithoutPass = await User.findOne({ email }).select('-password')
+    res.status(200).json({ message: 'Login successful', token, user: userWithoutPass })
   } catch (error) {
     next(error)
   }
